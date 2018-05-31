@@ -1,4 +1,6 @@
 var recBlob;
+var recorder;
+var constraints = { audio: true, video: false };
 
 var navigator = window.navigator;
 navigator.getUserMedia = (
@@ -16,9 +18,9 @@ function __log(e, data) {
     log.innerHTML += "\n" + e + " " + (data || '');
 }
 
-var recorder;
 
 function startUserMedia(stream) {
+    __log('entered startusermedia');
     var input = audio_context.createMediaStreamSource(stream);
     __log('Media stream created.');
 
@@ -45,8 +47,7 @@ function stopRecording(button) {
 
     // create WAV download link using audio data blob
     createDownloadLink();
-    // console.log('returned blob' + returnedBlob);
-    // uploadToServer(returnedBlob);
+
     recorder.clear();
 }
 
