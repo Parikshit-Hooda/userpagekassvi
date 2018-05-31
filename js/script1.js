@@ -45,7 +45,8 @@ function stopRecording(button) {
 
     // create WAV download link using audio data blob
     createDownloadLink();
-
+    // console.log('returned blob' + returnedBlob);
+    // uploadToServer(returnedBlob);
     recorder.clear();
 }
 
@@ -76,6 +77,23 @@ function createDownloadLink() {
         playanchorElement.download = new Date().toISOString() + '.wav';
         playanchorElement.innerHTML = playanchorElement.download;
 
+        //formdata post test
+        // console.log(audioElement);
+        console.log(blob);
+        var fd = new FormData();
+        fd.append('audioData', blob);
+        fd.append('audio_id', titleElement.innerText);
+        console.log('formdata' + fd);
+        $.ajax({
+            type: 'POST',
+            url: '',
+            data: fd,
+            processData: false,
+            contentType: false,
+            dataType: ""
+        });
+        //
+
         const markup = `
         <div id="recordeddiv" class="yellow lighten-2">
         <h5 class="recordedheader">${titleElement.innerText}</h5>
@@ -85,15 +103,16 @@ function createDownloadLink() {
         <br />
         <span class="recordedanalysiscontent">${spanAnalysisElement.innerText}</span>`;
 
-
-
         liElement.innerHTML = markup;
 
         var list = document.getElementById("recordingsUL");
         list.insertBefore(liElement, list.childNodes[0]);
         recBlob = blob;
+        // return recBlob;
+        //uploading audio to server
     });
 }
+
 
 window.onload = function init() {
     try {
