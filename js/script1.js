@@ -93,7 +93,6 @@ function createDownloadLink() {
             contentType: false,
             dataType: ""
         });
-        //
 
         const markup = `
         <div id="recordeddiv" class="yellow lighten-2">
