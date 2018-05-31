@@ -1,6 +1,4 @@
 var recBlob;
-var recorder;
-var constraints = { audio: true, video: false };
 
 var navigator = window.navigator;
 navigator.getUserMedia = (
@@ -18,36 +16,37 @@ function __log(e, data) {
     log.innerHTML += "\n" + e + " " + (data || '');
 }
 
+var recorder;
 
 function startUserMedia(stream) {
-    __log('entered startusermedia');
     var input = audio_context.createMediaStreamSource(stream);
-    __log('Media stream created.');
+    // __log('Media stream created.');
 
     // Uncomment if you want the audio to feedback directly
     //input.connect(audio_context.destination);
     //__log('Input connected to audio context destination.');
 
     recorder = new Recorder(input);
-    __log('Recorder initialised.');
+    // __log('Recorder initialised.');
 }
 
 function startRecording(button) {
     recorder && recorder.record();
     button.disabled = true;
     button.nextElementSibling.disabled = false;
-    __log('Recording...');
+    // __log('Recording...');
 }
 
 function stopRecording(button) {
     recorder && recorder.stop();
     button.disabled = true;
     button.previousElementSibling.disabled = false;
-    __log('Stopped recording.');
+    // __log('Stopped recording.');
 
     // create WAV download link using audio data blob
     createDownloadLink();
-
+    // console.log('returned blob' + returnedBlob);
+    // uploadToServer(returnedBlob);
     recorder.clear();
 }
 
@@ -81,33 +80,30 @@ function createDownloadLink() {
         //formdata post test
         console.log(blob);
         var fd = new FormData();
+
+        fd.append('audio_id', `${playanchorElement.download}.wav`);
         fd.append('audioData', blob);
-        fd.append('audio_id', titleElement.innerText);
 
-        var fdobject = {};
-        fd.forEach(function(value, key) {
-            fdobject[key] = value;
-        });
-        var jsonresp = JSON.stringify(fdobject);
-        console.log(jsonresp);
+        // console.log('formdata' + fd);
 
-        console.log('formdata' + fd);
+        var fd = new FormData();
         $.ajax({
             type: 'POST',
-            url: '',
+            url: '/emotions/niggers',
             data: fd,
             processData: false,
-            contentType: false,
-            dataType: ""
+            contentType: false
+        }).done(function(data) {
+            console.log('fd data' + data);
         });
 
         const markup = `
         <div id="recordeddiv" class="yellow lighten-2">
         <h5 class="recordedheader">${titleElement.innerText}</h5>
         <span class="recordedspan">${spanDateElement.innerText}</span>
-        <br />
+        <br>
         <a class="recordedanchor" href="${playanchorElement.href}" id="${playanchorElement.id}" download="${playanchorElement.download}"><i class="small material-icons">play_arrow</i></a>
-        <br />
+        <br>
         <span class="recordedanalysiscontent">${spanAnalysisElement.innerText}</span>`;
 
         liElement.innerHTML = markup;
@@ -115,8 +111,7 @@ function createDownloadLink() {
         var list = document.getElementById("recordingsUL");
         list.insertBefore(liElement, list.childNodes[0]);
         recBlob = blob;
-        // return recBlob;
-        //uploading audio to server
+
     });
 }
 
@@ -129,8 +124,8 @@ window.onload = function init() {
         window.URL = window.URL || window.webkitURL;
 
         audio_context = new AudioContext;
-        __log('Audio context set up.');
-        __log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
+        // __log('Audio context set up.');
+        // __log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
     } catch (e) {
         alert('No web audio support in this browser!');
     }
