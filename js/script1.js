@@ -79,11 +79,18 @@ function createDownloadLink() {
         playanchorElement.innerHTML = playanchorElement.download;
 
         //formdata post test
-        console.log(audioElement);
         console.log(blob);
         var fd = new FormData();
         fd.append('audioData', blob);
         fd.append('audio_id', titleElement.innerText);
+
+        var fdobject = {};
+        fd.forEach(function(value, key) {
+            fdobject[key] = value;
+        });
+        var jsonresp = JSON.stringify(fdobject);
+        console.log(jsonresp);
+
         console.log('formdata' + fd);
         $.ajax({
             type: 'POST',
