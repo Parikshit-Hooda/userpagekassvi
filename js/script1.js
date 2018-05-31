@@ -79,21 +79,21 @@ function createDownloadLink() {
         playanchorElement.innerHTML = playanchorElement.download;
 
         //formdata post test
-        // console.log(audioElement);
+        console.log(audioElement);
         console.log(blob);
-        // var fd = new FormData();
-        // fd.append('audioData', blob);
-        // fd.append('audio_id', titleElement.innerText);
-        // console.log('formdata' + fd);
-        // $.ajax({
-        //     type: 'POST',
-        //     url: '',
-        //     data: fd,
-        //     processData: false,
-        //     contentType: false,
-        //     dataType: ""
-        // });
-        // //
+        var fd = new FormData();
+        fd.append('audioData', blob);
+        fd.append('audio_id', titleElement.innerText);
+        console.log('formdata' + fd);
+        $.ajax({
+            type: 'POST',
+            url: '',
+            data: fd,
+            processData: false,
+            contentType: false,
+            dataType: ""
+        });
+        //
 
         const markup = `
         <div id="recordeddiv" class="yellow lighten-2">
