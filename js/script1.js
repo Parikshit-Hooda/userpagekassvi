@@ -149,7 +149,7 @@ options = {
         serverUrl: 'https://apiv3.beyondverbal.com/v3/recording/'
 
     },
-    apiKey: "3cb9118c-79aa-46f2-8a5c-71976e757f51",
+    apiKey: "gibberish",
     token: ''
 
 };
@@ -180,7 +180,7 @@ function uploadFile(file) {
     if (typeof FileReader !== "undefined") {
         var reader = new FileReader();
         reader.onload = function(e) {
-            analyzeFile("3cb9118c-79aa-46f2-8a5c-71976e757f51", e.target.result)
+            analyzeFile("gibberish", e.target.result)
                 .done(function(res) {
                     Show(res);
                     $("#submit").attr("disabled", false).text("Start");
@@ -196,7 +196,7 @@ function uploadFile(file) {
 
 function authenticate() {
     console.log('url token:' + options.url.tokenUrl);
-    options.apiKey = "3cb9118c-79aa-46f2-8a5c-71976e757f51";
+    options.apiKey = "gibberish";
     return $.ajax({
         url: options.url.tokenUrl,
         type: "POST",
