@@ -94,7 +94,7 @@ function createDownloadLink() {
             processData: false,
             contentType: false
         }).done(function(data) {
-            console.log('fd data' + data);
+            console.log('fd data' + data.length);
         });
 
         const markup = `
